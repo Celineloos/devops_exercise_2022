@@ -27,4 +27,4 @@ jobs:
         - name: Run Jest
           uses: ArtiomTr/jest-coverage-report-action@v2
           with:
-            working-directory: api
+            working-directory: /
