@@ -22,7 +22,7 @@ jobs:
             node-version: '16'
 
         - name: Install CI
-            run: npm ci
+          run: npm ci
 
         - name: Run Jest
           uses: ArtiomTr/jest-coverage-report-action@v2
