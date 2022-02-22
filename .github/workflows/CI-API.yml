@@ -8,7 +8,7 @@ on:
       - main
 defaults:
   run:
-    working-directory: api
+    working-directory: ./api
 
 jobs:
   coverage:
