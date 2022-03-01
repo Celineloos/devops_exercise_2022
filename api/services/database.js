@@ -16,17 +16,14 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (!dbConnection) {
         console.log('Opening connection');
-        console.log(process.env.DB_NAME);
 
         client.connect((err, db) => {
-        console.log(db);
 
           if (err || !db) {
             reject(err);
           }
           dbConnection = db.db(process.env.DB_NAME || 'myapp');
           console.log('Successfully connected to MongoDB.');
-          console.log('Test');
 
           resolve(dbConnection);
         });
