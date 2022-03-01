@@ -1,7 +1,7 @@
 name: Node.js CI
 on:
   push:
-    paths:
+    path:
       - 'api/**'
   pull_request:
     branches:
@@ -23,10 +23,11 @@ jobs:
 
         - name: Install CI
           run: npm ci
-
+          
+        - name: Run Jest
+          uses: ArtiomTr/jest-coverage-report-action@v2
+          with:
+            working-directory: ./api
+            
         - name: Run ESLint
           run: npm run lint
-        # - name: Run Jest
-        #   uses: ArtiomTr/jest-coverage-report-action@v2
-        #   with:
-        #     working-directory: ./
