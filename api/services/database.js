@@ -26,6 +26,7 @@ module.exports = {
           }
           dbConnection = db.db(process.env.DB_NAME);
           console.log('Successfully connected to MongoDB.');
+          console.log('Test');
 
           resolve(dbConnection);
         });
