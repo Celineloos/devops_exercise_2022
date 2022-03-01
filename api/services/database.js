@@ -12,8 +12,8 @@ const client = new MongoClient(uri, {
 let dbConnection;
 
 module.exports = {
-  client,
-  async getDb() {
+  client: client,
+    getDb: async function () {
     return new Promise((resolve, reject) => {
       if (!dbConnection) {
         console.log('Opening connection');
