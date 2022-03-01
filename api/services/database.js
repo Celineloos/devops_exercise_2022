@@ -16,8 +16,11 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (!dbConnection) {
         console.log('Opening connection');
+        console.log(process.env.DB_NAME);
 
         client.connect((err, db) => {
+        console.log(db);
+
           if (err || !db) {
             reject(err);
           }
