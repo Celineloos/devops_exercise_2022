@@ -28,11 +28,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "coverageThreshold": {
-      "global": {
-        "lines": 80
-      }
-    },
     "preset": "@shelf/jest-mongodb",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
