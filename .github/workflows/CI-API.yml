@@ -6,9 +6,11 @@ on:
   pull_request:
     branches:
       - main
+      paths:
+      - 'api/**'
 defaults:
   run:
-    working-directory: ./api**
+    working-directory: ./api
 
 jobs:
   coverage:
