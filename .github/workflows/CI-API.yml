@@ -23,11 +23,11 @@ jobs:
 
         - name: Install CI
           run: npm ci
-
+          
         - name: Run Jest
           uses: ArtiomTr/jest-coverage-report-action@v2
           with:
             working-directory: ./api
-
+            
         - name: Run ESLint
           run: npm run lint
