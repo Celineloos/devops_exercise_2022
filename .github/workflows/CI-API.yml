@@ -27,7 +27,7 @@ jobs:
         - name: Run Jest
           uses: ArtiomTr/jest-coverage-report-action@v2
           with:
-            working-directory: ../
+            working-directory: ./
             
         - name: Run ESLint
           run: npm run lint
