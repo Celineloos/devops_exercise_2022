@@ -13,19 +13,17 @@ let dbConnection;
 
 module.exports = {
   client: client,
-    getDb: async function () {
+  getDb: async function () {
     return new Promise((resolve, reject) => {
       if (!dbConnection) {
         console.log('Opening connection');
-        console.log(dbname);
-
-        client.connect((err, db) => {
-
+        client.connect(function (err, db) {
           if (err || !db) {
             reject(err);
           }
-          dbConnection = db.db(dbname);
-          console.log('Successfully connected to MongoDB.');
+
+          dbConnection = db.db(process.env.DB_NAME || "databasename");
+          console.log("Successfully connected to MongoDB.");
 
           resolve(dbConnection);
         });
@@ -33,5 +31,5 @@ module.exports = {
         resolve(dbConnection);
       }
     });
-  },
+  }
 };
