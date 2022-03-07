@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+    api:
+        build: "./api"
+        container-name: docker-api
+        hostname: api
+        ports:
+            - "3000:3000"
+        environment:
+            - PORT=3000
+        volumes:
+            - ./api:/app
+
+    frontend:
+        build: "./frontend"
+        container-name: frontend
+        ports:
+            - "4200:4200"
+        depends_on:
+            - api
+
+    database:
+        image: mongo:latest
+        container_name: mongo
+        environment:
+            USERNAME: admin
+            PASSWORD: admin123
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./data:/data/db
