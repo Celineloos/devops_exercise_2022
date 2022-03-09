@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
       .find({}).limit(50)
       .toArray((err, result) => {
         if (err) {
-          res.status(400).send('Error fetching users!');
+          res.status(400).send(db);
         } else {
           res.json(result);
         }

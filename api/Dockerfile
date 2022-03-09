@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm ci
+RUN npm install
 
-CMD ng serve --poll 5000
+CMD npm start
