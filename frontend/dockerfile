@@ -1,9 +1,12 @@
-FROM node:14
+FROM node:16.14
 
-WORKDIR /app
+WORKDIR /var/www
 
-COPY . /app
+COPY . /var/www
 
-RUN npm ci
+RUN npm install
 
-CMD ng serve --poll 5000
+expose 4200
+
+CMD ["npm", "start"]
+# COPY --from=build /app/dist/devops_exercise_2022_frontend /usr/share/nginx/html

@@ -1,8 +1,8 @@
 const { MongoClient } = require('mongodb');
 
 // Connection URI
-const uri = process.env.MONGO_URL || 'mongodb://localhost:270143343435337';
-const dbname = process.env.DB_NAME || 'kaas';
+const uri = process.env.MONGO_URL;
+const dbname = process.env.DB_NAME;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,

@@ -1,28 +1,23 @@
 version: '3.9'
 
 services:
-    # api:
-    #     build: "./api"
-    #     container_name: api
-    #     hostname: api
-    #     ports:
-    #         - "3000:3000"
-    #     environment:
-    #         - MONGO_URL=mongodb://root:example@database:27017/devops_db
-    #     volumes:
-    #         - ./api:/app
-
-    frontend:
-        build: "./frontend"
-        container_name: frontend
-        image: nginx:latest
+    api:
+        build: "./api"
+        container_name: api
+        hostname: api
         ports:
-            - "4200:4200"
+            - "3000:3000"
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017/devops_db
         volumes:
-            - './frontend/src:/var/build/frontend/'
-            - './shared/src:/var/build/shared/'
-            
+            - ./api:/app
 
+    # frontend:
+    #     build: frontend
+    #     ports:
+    #     - "4200:4200"
+            
+    # poort vanaf buiten de docker-compose niet te benaderen?
     database:
         image: mongo:latest
         container_name: mongodb
