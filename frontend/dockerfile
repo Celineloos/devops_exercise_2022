@@ -1,16 +1,14 @@
-FROM node:16.14
-
-RUN mkdir /app
+# Angular
+FROM node:latest as builder
 
 WORKDIR /app
+COPY . .
 
-COPY package.json /app/package.json
+# IF DEV THEN WATCH / POLL ? ELSE 0.0.0.0
+RUN npm install && \
+    npm run build
 
-RUN npm install
-
-COPY . /app
-
-EXPOSE 4200
-
-CMD npm start
-# COPY --from=build /app/dist/devops_exercise_2022_frontend /usr/share/nginx/html
+# Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY /nginx.conf /etc/nginx/conf.d/default.conf

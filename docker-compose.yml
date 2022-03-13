@@ -1,21 +1,32 @@
 version: '3.9'
 
 services:
-    # api:
-    #     build: "./api"
-    #     container_name: api
-    #     hostname: api
-    #     ports:
-    #         - "3000:3000"
-    #     environment:
-    #         - MONGO_URL=mongodb://root:example@database:27017/devops_db
-    #     volumes:
-    #         - ./api:/app
-
-    frontend:
-        build: ./frontend
+    api:
+        build: "./api"
+        container_name: api
+        hostname: api
         ports:
-        - '4200:4200'
+            - "3000:3000"
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017/devops_db
+        volumes:
+            - ./api:/app
+    frontend:
+        image: frontend
+        container_name: frontend
+        build:
+            context: ./frontend
+        ports:
+            - "4200:80"
+        depends_on:
+            - api
+    
+
+    # frontend:
+    #     build: ./frontend
+    #     volumes:
+    #          - "/app/node_modules"
+    #          - .:/app/
             
     # poort vanaf buiten de docker-compose niet te benaderen?
     # database:
@@ -30,13 +41,15 @@ services:
     #         - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
 
     # nginx:
-    #     build: "./"
-    #     container_name: ginx
-    #     restart: always
+    #     image: "devops_exercise_2022"
     #     ports:
-    #     - "80:80"
-    #     links:
-    #     - frontend
+    #         - "80:80"
+    #     tty: true
+    #     expose:
+    #         - "80" 
+    #     stdin_open: true
+    #     environment:
+    #         - MODE=dev
     # mongo-express:
     #     image: mongo-express
     #     restart: always
