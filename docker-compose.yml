@@ -1,33 +1,33 @@
 version: '3.9'
 
 services:
-    api:
-        build: "./api"
-        container_name: api
-        hostname: api
-        ports:
-            - "3000:3000"
-        environment:
-            - MONGO_URL=mongodb://root:example@database:27017/devops_db
-        volumes:
-            - ./api:/app
-
-    # frontend:
-    #     build: frontend
+    # api:
+    #     build: "./api"
+    #     container_name: api
+    #     hostname: api
     #     ports:
-    #     - "4200:4200"
+    #         - "3000:3000"
+    #     environment:
+    #         - MONGO_URL=mongodb://root:example@database:27017/devops_db
+    #     volumes:
+    #         - ./api:/app
+
+    frontend:
+        build: ./frontend
+        ports:
+        - '4200:4200'
             
     # poort vanaf buiten de docker-compose niet te benaderen?
-    database:
-        image: mongo:latest
-        container_name: mongodb
-        restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: example
-            MONGO_INITDB_DATABASE: devops_db
-        volumes:
-            - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+    # database:
+    #     image: mongo:latest
+    #     container_name: mongodb
+    #     restart: always
+    #     environment:
+    #         MONGO_INITDB_ROOT_USERNAME: root
+    #         MONGO_INITDB_ROOT_PASSWORD: example
+    #         MONGO_INITDB_DATABASE: devops_db
+    #     volumes:
+    #         - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
 
     # nginx:
     #     build: "./"

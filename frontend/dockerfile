@@ -1,12 +1,16 @@
 FROM node:16.14
 
-WORKDIR /var/www
+RUN mkdir /app
 
-COPY . /var/www
+WORKDIR /app
+
+COPY package.json /app/package.json
 
 RUN npm install
 
-expose 4200
+COPY . /app
 
-CMD ["npm", "start"]
+EXPOSE 4200
+
+CMD npm start
 # COPY --from=build /app/dist/devops_exercise_2022_frontend /usr/share/nginx/html
