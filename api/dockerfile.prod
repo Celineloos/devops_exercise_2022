@@ -1,14 +1,12 @@
-FROM node:14
+FROM node:16
 
 WORKDIR /app
 
-ENV MONGO_URL=mongodb://localhost:27017
-ENV DB_NAME=myapp
-ENV PORT=3000
-
-COPY ./api /app
+COPY package.json /app
 
 RUN npm install
+
+COPY . /app
 
 EXPOSE 3000
 
