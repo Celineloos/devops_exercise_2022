@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  async ngOnInit() {
+    var res = await fetch('http://localhost/api/users').then(r => r.json());
+    console.log(res);
+  }
 }
