@@ -5,5 +5,5 @@ db.createUser({
 })
 
 db.users.insert({
-  name: "user"
+  name: "admin"
 })
