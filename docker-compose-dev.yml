@@ -15,6 +15,8 @@ services:
         ports:
         - 4200:4200
         restart: on-failure
+        networks:
+            - ext_bridge
         
     api:
         build: 
@@ -29,8 +31,10 @@ services:
             - ./api:/app
         ports:
         - 3000:3000
+        networks:
+            - int_bridge
+            - ext_bridge
     
-    # poort vanaf buiten de docker-compose niet te benaderen?
     database:
         image: mongo:latest
         container_name: mongodb
@@ -41,3 +45,10 @@ services:
             MONGO_INITDB_DATABASE: devops_db
         volumes:
             - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+        networks:
+        - int_bridge
+
+networks:
+    int_bridge:
+        internal: true
+    ext_bridge:
