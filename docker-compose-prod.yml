@@ -34,7 +34,7 @@ services:
     api:
         build: 
             context: ./api
-            dockerfile: Dockerfile.prod
+            dockerfile: Dockerfile
         container_name: api
         hostname: api
         environment:
