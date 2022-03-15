@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  //TODO Heroku or something
+  API_URL: 'https://api',
 };
