@@ -19,6 +19,7 @@ services:
         container_name: frontend
         build:
             context: ./frontend
+            dockerfile: Dockerfile
             target: production
         volumes:
             - "/app/node_modules"
