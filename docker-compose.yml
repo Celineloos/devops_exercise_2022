@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+    nginx:
+        image: nginx:latest
+        container_name: nginx
+        depends_on:
+            - frontend
+            - database
+        volumes:
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        ports:
+        - 80:80
+        networks:
+            - ext_bridge
+
+    frontend:
+        image: frontend
+        container_name: frontend
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+            target: production
+        volumes:
+            - "/app/node_modules"
+            - ./frontend/dist:/usr/share/nginx/html
+        depends_on:
+            - api
+        ports:
+        - 8080:80
+        restart: on-failure
+        networks:
+            - ext_bridge
+        
+    api:
+        build: 
+            context: ./api
+            dockerfile: Dockerfile
+        container_name: api
+        hostname: api
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017
+            - DB_NAME=devops_db
+        # env_file:
+        #     - ./
+        volumes:
+            - ./api:/app
+        ports:
+        - 3000:3000
+        networks:
+            - int_bridge
+            - ext_bridge
+    
+    database:
+        image: mongo:latest
+        container_name: mongodb
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_INITDB_DATABASE: devops_db
+        volumes:
+            - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+        networks:
+            - int_bridge
+
+networks:
+    int_bridge:
+        internal: true
+    ext_bridge:
