@@ -41,8 +41,6 @@ services:
         environment:
             - MONGO_URL=mongodb://root:example@database:27017
             - DB_NAME=devops_db
-        # env_file:
-        #     - ./
         volumes:
             - ./api:/app
         ports:
