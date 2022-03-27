@@ -1,4 +1,7 @@
 const { MongoClient } = require('mongodb');
+const promClient = require('prom-client');
+const gauge = new promClient.Gauge({ name: 'number_of_clients', help: 'number of clients connected' })
+
 
 // Connection URI
 const uri = process.env.MONGO_URL;
@@ -17,16 +20,12 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (!dbConnection) {
         console.log('Opening connection');
-
-        console.log(dbname);
-        console.log(uri);
-
         client.connect((err, db) => {
+          gauge.inc(1);
           if (err || !db) {
             reject(err);
           }
-          console.log(db);
-
+          
           dbConnection = db.db(dbname);
           console.log('Successfully connected to MongoDB.');
 

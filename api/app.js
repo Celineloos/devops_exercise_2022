@@ -9,6 +9,16 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+const promBundle = require('express-prom-bundle');
+const metricsMiddleware = promBundle({
+  includePath: true,
+  includeStatusCode: true,
+  normalizePath: true,
+  promClient: {
+    collectDefaultMetrics: {}
+  }
+});
+
 const app = express();
 
 // view engine setup
@@ -28,6 +38,8 @@ app.use((req, res, next) => {
   res.header('Access-Control-Methods', 'PUT', 'POST', 'PATCH', 'DELETE', 'GET', 'OPTIONS');
   next();
 });
+
+app.use(metricsMiddleware);
 
 // routes
 app.use('/', indexRouter);

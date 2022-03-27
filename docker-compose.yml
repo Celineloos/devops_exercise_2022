@@ -44,7 +44,7 @@ services:
         volumes:
             - ./api:/app
         ports:
-        - 3000:3000
+        - 5000:5000
         networks:
             - int_bridge
             - ext_bridge
@@ -62,6 +62,36 @@ services:
         networks:
             - int_bridge
 
+    db-exporter:
+        image: bitnami/mongodb-exporter:0.11
+        container_name: db-exporter
+        restart: always
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017
+            - DB_NAME=devops_db
+        ports:
+            - 9216:9216
+        networks:
+            - int_bridge
+
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        volumes: 
+            - ./prometheus:/etc/prometheus
+            - prometheus-data:/prometheus
+        ports:
+            - 9090:80
+        command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+        
+    grafana:
+        build: ./grafana
+        container_name: grafana
+        ports:
+        - 3000:80
+volumes:
+    prometheus-data:
+    
 networks:
     int_bridge:
         internal: true
