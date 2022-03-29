@@ -28,6 +28,7 @@ services:
         environment:
             - MONGO_URL=mongodb://root:example@database:27017
             - DB_NAME=devops_db
+            - PORT=5000
         volumes:
             - ./api:/app
         ports:
@@ -56,13 +57,16 @@ services:
         environment:
             - MONGO_URL=mongodb://root:example@database:27017
             - DB_NAME=devops_db
+            - PORT=9216
         ports:
             - 9216:9216
         networks:
             - int_bridge
+
     prometheus:
         image: prom/prometheus:latest
         container_name: prometheus
+        hostname: prometheus
         volumes: 
             - ./prometheus:/etc/prometheus
             - prometheus-data:/prometheus
@@ -75,6 +79,12 @@ services:
         container_name: grafana
         ports:
         - 3000:3000
+        depends_on:
+        - prometheus
+        networks:
+            - int_bridge
+            - ext_bridge
+            
 volumes:
     prometheus-data:
 
