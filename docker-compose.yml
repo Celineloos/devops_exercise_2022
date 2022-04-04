@@ -75,30 +75,30 @@ services:
         networks:
             - int_bridge
 
-    prometheus:
-        image: prom/prometheus:latest
-        container_name: prometheus
-        volumes: 
-            - ./prometheus:/etc/prometheus
-            - prometheus-data:/prometheus
-        ports:
-            - 9090:80
-        command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
-        networks:
-            - int_bridge
+#     prometheus:
+#         image: prom/prometheus:latest
+#         container_name: prometheus
+#         volumes: 
+#             - ./prometheus:/etc/prometheus
+#             - prometheus-data:/prometheus
+#         ports:
+#             - 9090:80
+#         command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+#         networks:
+#             - int_bridge
         
-    grafana:
-        build: ./grafana
-        container_name: grafana
-        ports:
-        - 3000:80
-        depends_on:
-        - prometheus
-        networks:
-            - int_bridge
-            - ext_bridge
-volumes:
-    prometheus-data:
+#     grafana:
+#         build: ./grafana
+#         container_name: grafana
+#         ports:
+#         - 3000:80
+#         depends_on:
+#         - prometheus
+#         networks:
+#             - int_bridge
+#             - ext_bridge
+# volumes:
+#     prometheus-data:
     
 networks:
     int_bridge:
