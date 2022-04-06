@@ -50,18 +50,18 @@ services:
         networks:
         - int_bridge
 
-    db-exporter:
-        image: bitnami/mongodb-exporter:0.11
-        container_name: db-exporter
-        restart: always
-        environment:
-            - MONGO_URL=mongodb://root:example@database:27017
-            - DB_NAME=devops_db
-            - PORT=9216
-        ports:
-            - 9216:9216
-        networks:
-            - int_bridge
+#     db-exporter:
+#         image: bitnami/mongodb-exporter:0.11
+#         container_name: db-exporter
+#         restart: always
+#         environment:
+#             - MONGO_URL=mongodb://root:example@database:27017
+#             - DB_NAME=devops_db
+#             - PORT=9216
+#         ports:
+#             - 9216:9216
+#         networks:
+#             - int_bridge
 
 #     prometheus:
 #         image: prom/prometheus:latest

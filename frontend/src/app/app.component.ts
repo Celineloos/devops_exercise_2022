@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-
-import { environment } from '../environments/environment';
+import { environment } from "../environments/environment";
+import { User } from "../models/user";
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,18 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Show users';
 
-  //TODO Service.ts for nicer coded
+  constructor(private usersService: UsersService) {}
+
+  user: User | undefined;
+
   async ngOnInit() {
-    console.log(`${environment.API_URL}`);
-
-    var res = await fetch(`${environment.API_URL}/users`).then(r => r.json());
-    console.log(res);
-  }
+    await this.usersService.GetUsers().subscribe((result) => {
+      this.user = result[0];
+      console.log(this.user);
+		}, (err) => {
+			console.log('Error: ', err.error.error);
+		});
+	}
 }
