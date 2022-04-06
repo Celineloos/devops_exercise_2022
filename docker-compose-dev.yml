@@ -14,7 +14,7 @@ services:
         depends_on:
             - api
         ports:
-        - 4200:4200
+            - 4200:4200
         restart: on-failure
         networks:
             - ext_bridge
@@ -32,7 +32,7 @@ services:
         volumes:
             - ./api:/app
         ports:
-        - 5000:5000
+            - 5000:5000
         networks:
             - int_bridge
             - ext_bridge
@@ -50,43 +50,38 @@ services:
         networks:
         - int_bridge
 
-#     db-exporter:
-#         image: bitnami/mongodb-exporter:0.11
-#         container_name: db-exporter
-#         restart: always
-#         environment:
-#             - MONGO_URL=mongodb://root:example@database:27017
-#             - DB_NAME=devops_db
-#             - PORT=9216
-#         ports:
-#             - 9216:9216
-#         networks:
-#             - int_bridge
+    db-exporter:
+        image: bitnami/mongodb-exporter:0.11
+        container_name: db-exporter
+        restart: always
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017
+            - DB_NAME=devops_db
+        ports:
+            - 9216:9216
+        networks:
+            - int_bridge
 
-#     prometheus:
-#         image: prom/prometheus:latest
-#         container_name: prometheus
-#         hostname: prometheus
-#         volumes: 
-#             - ./prometheus:/etc/prometheus
-#             - prometheus-data:/prometheus
-#         ports:
-#             - 9090:9090
-#         command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        volumes: 
+            - ./prometheus:/etc/prometheus
+            - prometheus-data:/prometheus
+        ports:
+            - 9090:9090
+        command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
         
-#     grafana:
-#         build: ./grafana
-#         container_name: grafana
-#         ports:
-#         - 3000:3000
-#         depends_on:
-#         - prometheus
-#         networks:
-#             - int_bridge
-#             - ext_bridge
-            
-# volumes:
-#     prometheus-data:
+    grafana:
+        build: ./grafana
+        container_name: grafana
+        ports:
+            - 3000:3000
+        depends_on:
+        - prometheus
+
+volumes:
+    prometheus-data:
 
 networks:
     int_bridge:

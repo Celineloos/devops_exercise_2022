@@ -1,19 +1,6 @@
 version: '3.9'
 
 services:
-    nginx:
-        image: nginx:latest
-        container_name: nginx
-        depends_on:
-            - frontend
-            - database
-        volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-        ports:
-        - 80:80
-        networks:
-            - ext_bridge
-
     frontend:
         image: frontend
         container_name: frontend
@@ -60,46 +47,40 @@ services:
             MONGO_INITDB_DATABASE: devops_db
         volumes:
             - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
-            - ./database/files:/data/db
         networks:
             - int_bridge
 
-#     db-exporter:
-#         image: bitnami/mongodb-exporter:0.11
-#         container_name: db-exporter
-#         restart: always
-#         environment:
-#             - MONGO_URL=mongodb://root:example@database:27017
-#             - DB_NAME=devops_db
-#         ports:
-#             - 9216:9216
-#         networks:
-#             - int_bridge
+    db-exporter:
+        image: bitnami/mongodb-exporter:0.11
+        container_name: db-exporter
+        restart: always
+        environment:
+            - MONGO_URL=mongodb://root:example@database:27017
+            - DB_NAME=devops_db
+        ports:
+            - 9216
+        networks:
+            - int_bridge
 
-#     prometheus:
-#         image: prom/prometheus:latest
-#         container_name: prometheus
-#         volumes: 
-#             - ./prometheus:/etc/prometheus
-#             - prometheus-data:/prometheus
-#         ports:
-#             - 9090:80
-#         command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
-#         networks:
-#             - int_bridge
-        
-#     grafana:
-#         build: ./grafana
-#         container_name: grafana
-#         ports:
-#         - 3000:80
-#         depends_on:
-#         - prometheus
-#         networks:
-#             - int_bridge
-#             - ext_bridge
-# volumes:
-#     prometheus-data:
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        volumes: 
+            - ./prometheus:/etc/prometheus
+            - prometheus-data:/prometheus
+        ports:
+            - 9090:80
+        command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+  
+    grafana:
+        build: ./grafana
+        container_name: grafana
+        ports:
+        - 3000:80
+        depends_on:
+        - prometheus
+volumes:
+    prometheus-data:
     
 networks:
     int_bridge:
