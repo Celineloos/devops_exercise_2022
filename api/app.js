@@ -3,21 +3,21 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const promBundle = require('express-prom-bundle');
+// const promBundle = require('express-prom-bundle');
 
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
-const metricsMiddleware = promBundle({
-  includePath: true,
-  includeStatusCode: true,
-  normalizePath: true,
-  promClient: {
-    collectDefaultMetrics: {},
-  },
-});
+// const metricsMiddleware = promBundle({
+//   includePath: true,
+//   includeStatusCode: true,
+//   normalizePath: true,
+//   promClient: {
+//     collectDefaultMetrics: {},
+//   },
+// });
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(metricsMiddleware);
+// app.use(metricsMiddleware);
 
 // routes
 app.use('/', indexRouter);

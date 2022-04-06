@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { environment } from "../environments/environment";
+import { User } from "../models/user";
 import { UsersService } from '../services/users.service';
-import { User } from '../models/user';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,12 @@ export class AppComponent {
 
   constructor(private usersService: UsersService) {}
 
-  users: any;
+  user: User | undefined;
 
   async ngOnInit() {
-		await this.usersService.GetUsers().subscribe((result) => {
-      this.users = result;
-      console.log(this.users);
+    await this.usersService.GetUsers().subscribe((result) => {
+      this.user = result[0];
+      console.log(this.user);
 		}, (err) => {
 			console.log('Error: ', err.error.error);
 		});
