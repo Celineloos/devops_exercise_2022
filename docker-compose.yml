@@ -23,7 +23,7 @@ services:
             target: production
         volumes:
             - "/app/node_modules"
-            - ./frontend/dist:/usr/share/nginx/html
+            - ./frontend/dist:/usr/share/nginx/html 
         depends_on:
             - api
         ports:
@@ -60,6 +60,7 @@ services:
             MONGO_INITDB_DATABASE: devops_db
         volumes:
             - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+            - ./database/files:/data/db
         networks:
             - int_bridge
 
