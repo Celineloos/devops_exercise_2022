@@ -60,7 +60,6 @@ services:
             MONGO_INITDB_DATABASE: devops_db
         volumes:
             - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
-            - ./database:/data/db
         networks:
             - int_bridge
 
