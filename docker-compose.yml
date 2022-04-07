@@ -47,6 +47,7 @@ services:
             MONGO_INITDB_DATABASE: devops_db
         volumes:
             - ./database/mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+            - dbvolume:/data/db
         networks:
             - int_bridge
 
@@ -80,7 +81,8 @@ services:
         depends_on:
         - prometheus
 volumes:
-    prometheus-data:
+    prometheus-data:    
+    dbvolume:
     
 networks:
     int_bridge:
