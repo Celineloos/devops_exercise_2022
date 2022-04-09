@@ -52,7 +52,6 @@ services:
             - int_bridge
 
 volumes:
-    prometheus-data:
     dbvolume:
     
 networks:
